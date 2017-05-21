@@ -1,0 +1,39 @@
+{
+  "datacenter": "{{ env }}",
+  "data_dir": "{{ data_dir }}",
+  "log_level": "INFO",
+  "node_name": "{{ node_name }}",
+  "bind_addr": "{{ local_ip }}",
+  "server": true,
+  "ui": true,
+  "enable_syslog": true,
+  "rejoin_after_leave": true,
+  {% if version == "0.6.4" %}
+  {% if node_count %}
+  "bootstrap_expect": {{ node_count }},
+  {% else %}
+  "bootstrap": true,
+  {% endif %}
+  {% if cluster_nodes %}
+  "retry_join": {{ cluster_nodes|string|replace("'","\"") }},
+  {% endif %}
+  {% else %}
+  {% if aws_discover %}
+  "retry-join-ec2-tag-key": "Service",
+  "retry-join-ec2-tag-value": "consul2",
+  {% else %}
+  "bootstrap": true,
+  {% endif %}
+  {% endif %}
+  {% if statsd_address %}
+  "telemetry": {
+     "statsd_address": "{{ statsd_address }}",
+     "statsite_prefix": "{{ statsd_prefix }}.consul"
+  },
+  {% endif %}
+  "addresses": {
+    "dns": "{{ local_ip }}",
+    "http": "{{ local_ip }}",
+    "rpc": "{{ local_ip }}"
+  }
+}

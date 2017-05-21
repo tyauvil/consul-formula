@@ -1,0 +1,3 @@
+consul:
+  config:
+    encrypt_key: "ZnJpZW5kcyByb21hbnMgY291bnRyeW1lbg=="
