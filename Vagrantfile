@@ -7,7 +7,7 @@ Vagrant.configure("2") do |config|
   config.vm.network "forwarded_port", guest: 8600, host: 8600
   config.vm.box = "ubuntu/xenial64"
   config.vm.provision :saltdeps do |deps|
-    deps.base_vagrantfile = "git@github.com:Ubiquiti-Cloud/salt-vagrant-base.git"
+    deps.base_vagrantfile = "git@github.com:tyauvil/salt-vagrant-base.git"
     deps.checkout_path =  "./.vagrant-salt/deps"
   end
 end
